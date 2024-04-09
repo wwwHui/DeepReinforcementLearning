@@ -80,7 +80,7 @@ class QNet(nn.Module):  # `nn.Module` is a PyTorch module for neural network
         if self.explore_rate < torch.rand(1):
             action = self.net(state).argmax(dim=1, keepdim=True)
         else:
-            action = torch.randint(self.action_dim, size=(state.shape[0], 1))
+            action = torch.randint(self.action_dim, size=(state.shape[0], 1), device=state.device)
         return action
 
 
@@ -191,7 +191,7 @@ class AgentDQN(AgentBase):
         for i in range(horizon_len):
             state = torch.as_tensor(ary_state, dtype=torch.float32, device=self.device)
             if if_random:
-                action = torch.randint(self.action_dim, size=(1,))[0]
+                action = torch.randint(self.action_dim, size=(1,), device=self.device)[0]
             else:
                 action = get_action(state.unsqueeze(0))[0, 0]
 
