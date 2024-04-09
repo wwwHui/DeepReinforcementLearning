@@ -201,7 +201,7 @@ class AgentDQN(AgentBase):
                 ary_state, _ = env.reset()
 
             states[i] = state
-            actions[i] = action
+            actions[i] = action.to(self.device)
             rewards[i] = reward
             masks[i] = 1 if truncated else float(not terminated)
 
